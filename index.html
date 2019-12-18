@@ -11,26 +11,19 @@
     <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
     <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
     <script>
-        AFRAME.registerComponent("registerd-events", {
-            init : function() {
-                var marker = this.el;
-                
-        
-                marker.addEventListener("markerFound", function() {
-                    
-                        
-                    var sound = document.getElementsByTagName("a-sound")[0];
-                    sound.components.sound.playSound();
-                });
-                marker.addEventListener("markerLost", function() {
-                    
-                        
-                    var sound = document.getElementsByTagName("a-sound")[0];
-                    sound.components.sound.stopSound();
-                });
-            }
-        });
-        </script>
+        AFRAME.registerComponent('soundhandler', {
+    tick: function () {
+           var entity = document.querySelector('[sound]');
+         if (document.querySelector('a-marker').object3D.visible == true) {
+            entity.components.sound.playSound();
+        } else {
+        }
+
+     }
+});
+</script>
+
+
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
@@ -47,7 +40,7 @@
             <a-entity rotation="-90 0 0" geometry="primitive:plane;width:1.6;height:2.32;" material="shader:gif;src:url(img/akemasite3.gif);" gif="" transparent="true"></a-entity>
             
         </a-marker>
-        <a-sound src="music/test.mp3" preload position="-1 -1 3" begin="marker-found" end="marker-lost"></a-sound>
+        <a-entity sound="src: #sound" autoplay="false"></a-entity>
 
     </a-scene>
     
